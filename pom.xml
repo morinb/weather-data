@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.morinb</groupId>
-    <artifactId>spring-boot-angular-startup</artifactId>
+    <artifactId>weather-data</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>spring-boot-angular-startup</name>
-    <description>Startup project for spring boot and angularjs</description>
+    <name>weather-datap</name>
+    <description>Weather data with spring boot and angularjs</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
