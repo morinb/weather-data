@@ -1,6 +1,7 @@
 package com.github.morinb;
 
-import com.github.morinb.dtos.ExampleData;
+import com.github.morinb.dtos.weather.*;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +24,26 @@ public class Application implements CommandLineRunner {
     @Autowired
     private EntityManagerFactory emf;
 
+    public WeatherData sample() {
+        WeatherData wd = new WeatherData();
+        wd.setCoord(new Coord(-0.13, 51.51));
+        wd.setWeather(Lists.newArrayList(new Weather(800, "Clear", "Sky is clear", "01n")));
+        wd.setBase("stations");
+        wd.setMain(new Main(288.74, 1022, 68, 285.93, 291.15, null, null));
+        wd.setVisibility(10000);
+        wd.setWind(new Wind(2.1, 170));
+        wd.setClouds(new Clouds(0));
+        wd.setDt(1439078911L);
+        wd.setSys(new Sys(1, 5091, 0.0111, "GB", 1439094953L, 1439148910L));
+        wd.setId(2643743L);
+        wd.setName("London");
+        wd.setCod(200);
+
+        return wd;
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        LOG.info("Creating sample datas ...");
-        final EntityManager em = emf.createEntityManager();
 
-        em.getTransaction().begin();
-        ExampleData ed1 = new ExampleData("One"  ,1 << 4);
-        ExampleData ed2 = new ExampleData("Two"  ,1 << 5);
-        ExampleData ed3 = new ExampleData("Three",1 << 2);
-        ExampleData ed4 = new ExampleData("Four" ,1 << 7);
-        ExampleData ed5 = new ExampleData("Five" ,1 << 3);
-        ExampleData ed6 = new ExampleData("Six"  ,1 << 6);
-        ExampleData ed7 = new ExampleData("Seven",1 << 1);
-
-        em.persist(ed1);
-        em.persist(ed2);
-        em.persist(ed3);
-        em.persist(ed4);
-        em.persist(ed5);
-        em.persist(ed6);
-        em.persist(ed7);
-
-        em.getTransaction().commit();
-        LOG.info("Sample datas created.");
     }
 }

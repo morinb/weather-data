@@ -24,29 +24,50 @@
     -->
 
 </head>
-<body>
-
-<section ng-controller="RosterController as rosterCtrl">
+<body ng-controller="WeatherController as weatherCtrl">
+<section id="fetchCity">
     <div class="container">
-        <div ag-grid="gridOptions" class="ag-fresh" style="height: 100%"></div>
+        <form class="form-horizontal" ng-submit="fetchWeather(cityName)">
+            <div class="form-group">
+                <label for="cityName" class="col-sm-2 control-label">Email</label>
+
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="cityName" ng-model="cityName" placeholder="Paris,FR">
+                </div>
+                <div class="col-sm-1">
+                    <button ng-hide="cityName.length > 0" type="submit" class="btn btn-primary">Refresh</button>
+                    <button ng-show="cityName.length > 0" type="submit" class="btn btn-primary">Fetch</button>
+                </div>
+            </div>
+        </form>
     </div>
 </section>
-<section ng-controller="PieChartController as pie">
-    <div class="container">
-        <table class="table">
-            <tr>
-                <th>Key</th>
-                <th>Value</th>
-            </tr>
-            <tr ng-repeat="item in data | orderBy: '-value'">
-                <td>{{item.key}}</td>
-                <td>{{item.value}}</td>
-            </tr>
-        </table>
 
-        <nvd3 options="options" data="data"></nvd3>
+<section id="weather">
+    <div class="container" ng-repeat="cityDatas in citiesData">
+        <div class="" ng-repeat="d in cityDatas">{{(d.dt*1000) | date:'dd/MM/yyyy HH:mm:ss'}}
+            {{d.name}}: <span>{{d.coord.lat}}, {{d.coord.lon}}</span>
+            {{d.base}}
+            <span>
+                {{d.main.temp}}°K, {{d.main.pressure}} hPa, {{d.main.humidity}}%
+                [{{d.temp_min}} - {{d.temp_max}}]°K
+            </span>
+            <span>Wind:
+                {{d.wind.speed}} m/s
+                {{d.wind.deg}}°
+            </span>
+            <span>Clouds:
+                {{d.clouds.all}}
+            </span>
+            Weather :
+            <span ng-repeat="weath in d.weather">
+                {{weath.main}} - {{weath.description}}
+                {{weath.icon}}.png
+                <img ng-src="{{'http://openweathermap.org/img/w/'+weath.icon+'.png'}}">
+            </span>
+        </div>
     </div>
-
 </section>
+
 </body>
 </html>
